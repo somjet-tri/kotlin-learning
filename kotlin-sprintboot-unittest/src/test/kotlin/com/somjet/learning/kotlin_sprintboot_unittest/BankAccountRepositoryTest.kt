@@ -2,7 +2,7 @@ package com.somjet.learning.kotlin_sprintboot_unittest
 
 import com.somjet.learning.kotlin_sprintboot_unittest.entity.BankAccount
 import com.somjet.learning.kotlin_sprintboot_unittest.repository.BankAccountRepository
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -22,7 +22,8 @@ class BankAccountRepositoryTest {
         val ingBankAccount = BankAccount("ING", "123ING456", "JOHN SMITH")
         entityManager.persist(ingBankAccount)
         entityManager.flush()
+        ingBankAccount.id = 1
         val ingBankAccountFound = bankAccountRepository.findByIdOrNull(ingBankAccount.id!!)
-        assertThat(ingBankAccountFound == ingBankAccount)
+        assertEquals(ingBankAccount, ingBankAccountFound)
     }
 }
