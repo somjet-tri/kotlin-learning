@@ -20,28 +20,28 @@ class BankControllerTest(@Autowired val mockMvc: MockMvc) {
     lateinit var bankAccountService: BankAccountService
     private val bankAccount: BankAccount = BankAccount("ING", "123ING456", "JOHN SMITH")
     private val mapper = jacksonObjectMapper()
-    
+
     @Test
     fun givenExistingBankAccount_whenGetRequest_thenReturnsBankAccountJsonWithStatus200() {
-        every { bankAccountService.getBankAccount(1) } returns bankAccount;
+        every { bankAccountService.getBankAccount(1) } returns bankAccount
 
         mockMvc.perform(get("/api/bankAccount?id=1"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.bankCode").value("ING"));
+            .andExpect(jsonPath("$.bankCode").value("ING"))
     }
 
     @Test
     fun givenBankAccountDoesntExist_whenGetRequest_thenReturnsStatus400() {
-        every { bankAccountService.getBankAccount(2) } returns null;
+        every { bankAccountService.getBankAccount(2) } returns null
 
         mockMvc.perform(get("/api/bankAccount?id=2"))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isBadRequest())
     }
 
     @Test
     fun whenPostRequestWithBankAccountJson_thenReturnsStatus200() {
-        every { bankAccountService.addBankAccount(bankAccount) } returns bankAccount;
+        every { bankAccountService.addBankAccount(bankAccount) } returns bankAccount
 
         mockMvc.perform(
             post("/api/bankAccount").content(mapper.writeValueAsString(bankAccount))
@@ -49,6 +49,6 @@ class BankControllerTest(@Autowired val mockMvc: MockMvc) {
         )
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.bankCode").value("ING"));
+            .andExpect(jsonPath("$.bankCode").value("ING"))
     }
 }

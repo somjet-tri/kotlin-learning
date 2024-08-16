@@ -19,7 +19,7 @@ class BankAccountRepositoryTest {
 
     @Test
     fun WhenFindById_thenReturnBankAccount() {
-        val ingBankAccount = BankAccount("ING", "123ING456", "JOHN SMITH");
+        val ingBankAccount = BankAccount("ING", "123ING456", "JOHN SMITH")
         entityManager.persist(ingBankAccount)
         entityManager.flush()
         val ingBankAccountFound = bankAccountRepository.findByIdOrNull(ingBankAccount.id!!)
